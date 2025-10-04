@@ -1,0 +1,76 @@
+/* Classic Dark Mode Database Style */
+body {
+    font-family: monospace;
+    background-color: #1e1e1e; /* Dark background */
+    color: #dcdcdc; /* Light text */
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2 {
+    font-weight: normal;
+    margin: 10px 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+form {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+select, button {
+    font-family: monospace;
+    font-size: 13px;
+    padding: 4px 6px;
+    background-color: #2e2e2e;
+    color: #dcdcdc;
+    border: 1px solid #555;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3a3a3a;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: #2a2a2a; /* Table container darker */
+    border: 1px solid #555;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #dcdcdc;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 4px 6px;
+    text-align: left;
+}
+
+thead {
+    background-color: #3a3a3a;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #2e2e2e;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #242424;
+}
+
+tbody tr:hover {
+    background-color: #2e2e2e; /* Minimal hover, keeping professional look */
+}

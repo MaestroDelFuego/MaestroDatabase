@@ -1,0 +1,14 @@
+[
+  {
+    "staff_id": 1,
+    "name": "John Doe",
+    "role": "Gate Agent",
+    "airport_id": 1
+  },
+  {
+    "staff_id": 2,
+    "name": "Emma Green",
+    "role": "Pilot",
+    "airport_id": 2
+  }
+]

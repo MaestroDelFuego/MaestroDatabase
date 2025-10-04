@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MDB Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>MDB Table Viewer</h1>
+
+    <form method="post" action="/view">
+        <label for="table">Select Table:</label>
+        <select name="table_name" id="table">
+            {% for table in tables %}
+                <option value="{{ table }}" {% if selected_table == table %}selected{% endif %}>{{ table }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">View Table</button>
+    </form>
+
+    {% if rows %}
+        <h2>Table: {{ selected_table }}</h2>
+
+        <input type="text" id="search" placeholder="Search..." onkeyup="searchTable()">
+
+        <div class="table-container">
+            <table id="mdb-table">
+                <thead>
+                    <tr>
+                        {% for col in rows[0].keys() %}
+                            <th>{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            {% for key, value in row.items() %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+<script>
+function searchTable() {
+    const input = document.getElementById("search").value.toLowerCase();
+    const table = document.getElementById("mdb-table");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        let rowText = rows[i].innerText.toLowerCase();
+        rows[i].style.display = rowText.includes(input) ? "" : "none";
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "passenger_id": 1,
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "passport_number": "A12345678"
+  },
+  {
+    "passenger_id": 2,
+    "name": "Bob Smith",
+    "email": "bob@example.com",
+    "passport_number": "B98765432"
+  }
+]

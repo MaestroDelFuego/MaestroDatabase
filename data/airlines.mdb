@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Delta Airlines",
+    "iata_code": "DL",
+    "country": "USA"
+  },
+  {
+    "id": 2,
+    "name": "British Airways",
+    "iata_code": "BA",
+    "country": "UK"
+  }
+]

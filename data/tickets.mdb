@@ -1,0 +1,16 @@
+[
+  {
+    "ticket_id": 1,
+    "flight_id": 1,
+    "passenger_id": 1,
+    "seat_number": "12A",
+    "price": 350.5
+  },
+  {
+    "ticket_id": 2,
+    "flight_id": 2,
+    "passenger_id": 2,
+    "seat_number": "7B",
+    "price": 450.0
+  }
+]

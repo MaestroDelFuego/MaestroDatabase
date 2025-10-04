@@ -1,0 +1,32 @@
+{
+  "schema": {
+    "id": "int",
+    "name": "str",
+    "city": "str",
+    "country": "str",
+    "iata_code": "str"
+  },
+  "rows": [
+    {
+      "id": 1,
+      "name": "John F. Kennedy International",
+      "city": "New York",
+      "country": "USA",
+      "iata_code": "JFK"
+    },
+    {
+      "id": 2,
+      "name": "Los Angeles International",
+      "city": "Los Angeles",
+      "country": "USA",
+      "iata_code": "LAX"
+    },
+    {
+      "id": 3,
+      "name": "London Heathrow",
+      "city": "London",
+      "country": "UK",
+      "iata_code": "LHR"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyHigh Airport</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f4f8; margin:0; padding:0;}
+        header { background:#003366; color:#fff; text-align:center; padding:20px;}
+        nav { display:flex; justify-content:center; background:#00509e;}
+        nav a { color:#fff; padding:15px 25px; text-decoration:none; font-weight:bold;}
+        nav a:hover { background:#003366;}
+        .container { padding:20px;}
+        h2 { color:#003366; margin-top:40px; }
+        table { width:100%; border-collapse: collapse; margin-bottom:30px; }
+        th, td { padding:10px; border:1px solid #ccc; text-align:left; }
+        th { background:#e6f0ff; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>SkyHigh Airport</h1>
+    <p>Your gateway to the skies!</p>
+</header>
+<nav>
+    {% for table in tables %}
+        <a href="#{{ table }}">{{ table | capitalize }}</a>
+    {% endfor %}
+</nav>
+<div class="container">
+    {% for table in tables %}
+        <h2 id="{{ table }}">{{ table | capitalize }}</h2>
+        {% if data[table] %}
+        <table>
+            <tr>
+                {% for col in data[table][0].keys() %}
+                    <th>{{ col | capitalize }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data[table] %}
+            <tr>
+                {% for value in row.values() %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No records found.</p>
+        {% endif %}
+    {% endfor %}
+</div>
+</body>
+</html>
