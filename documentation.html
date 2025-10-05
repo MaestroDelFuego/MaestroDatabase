@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maestro Database (MDB) In-Depth Guide</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 25px 10px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+  }
+  header p {
+    margin-top: 5px;
+    font-size: 1.1rem;
+    color: #dfe6e9;
+  }
+  main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  h2, h3 {
+    color: #2c3e50;
+    margin-top: 30px;
+  }
+  h3 {
+    margin-top: 20px;
+  }
+  pre {
+    background-color: #eaeaea;
+    padding: 12px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    color: #c7254e;
+  }
+  ul, ol {
+    margin-left: 20px;
+  }
+  .section {
+    margin-bottom: 40px;
+  }
+  .highlight {
+    background-color: #dff9fb;
+    border-left: 5px solid #22a6b3;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 3px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  table th, table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table th {
+    background-color: #f0f0f0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Maestro Database (MDB) In-Depth Guide</h1>
+  <p>A complete guide to using MDB via CLI, GUI, and REST API</p>
+</header>
+
+<main>
+
+  <div class="section">
+    <h2>1. Overview</h2>
+    <p>Maestro Database (MDB) is a lightweight, Python-native database system that stores tables as JSON files. It provides three main interfaces:</p>
+    <ul>
+      <li><strong>CLI / Terminal:</strong> Directly interact with tables using Python code.</li>
+      <li><strong>GUI:</strong> Spreadsheet-style graphical interface for table management.</li>
+      <li><strong>REST API:</strong> HTTP JSON interface for integration with web apps or scripts.</li>
+    </ul>
+    <p>MDB supports table creation, schema validation, CRUD operations, transactions, backup, and CSV export.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Key Concepts</h2>
+    <ul>
+      <li><strong>Table:</strong> Named collection of rows. Each table can have an optional schema.</li>
+      <li><strong>Row / Record:</strong> Single entry in a table, represented as a dictionary.</li>
+      <li><strong>Schema:</strong> Defines columns and their data types (int, str, float). Optional but recommended.</li>
+      <li><strong>Transaction:</strong> Group of changes that can be committed or rolled back.</li>
+      <li><strong>Persistence:</strong> Tables are stored in <code>data/</code> as JSON files.</li>
+    </ul>
+    <div class="highlight">Tip: Using a schema helps catch invalid data before it is inserted.</div>
+  </div>
+
+  <div class="section">
+    <h2>3. CLI / Terminal Usage</h2>
+    <p>Use the MDB terminal interface to manipulate tables directly in Python:</p>
+
+    <h3>3.1 Create Table</h3>
+    <pre><code>db = MDB()
+db.create_table("users", schema={"id": int, "name": str, "email": str})</code></pre>
+
+    <h3>3.2 Insert Rows</h3>
+    <pre><code>db.insert("users", {"id": 1, "name": "Alice", "email": "alice@example.com"})
+db.insert("users", {"id": 2, "name": "Bob", "email": "bob@example.com"})</code></pre>
+
+    <h3>3.3 Query / Select</h3>
+    <pre><code>db.select("users")
+db.select("users", name="Alice")</code></pre>
+
+    <h3>3.4 Update Rows</h3>
+    <pre><code>db.update("users", {"id": 2}, {"name": "Robert"})</code></pre>
+
+    <h3>3.5 Delete Rows</h3>
+    <pre><code>db.delete("users", id=1)</code></pre>
+
+    <h3>3.6 Transactions</h3>
+    <pre><code>db.begin_transaction("users")
+db.insert("users", {"id":3,"name":"Charlie"})
+db.rollback("users")  # Undo
+db.commit("users")    # Save changes</code></pre>
+
+    <h3>3.7 Backup & Export</h3>
+    <pre><code>db.backup_table("users")
+db.export_csv("users", "users.csv")</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>4. GUI Usage</h2>
+    <p>Launch with:</p>
+    <pre><code>python maestrodatabase_gui.py</code></pre>
+    <p>The GUI allows:</p>
+    <ul>
+      <li>Create, load, drop tables</li>
+      <li>View table rows in a spreadsheet-style table</li>
+      <li>Insert, edit, delete rows via forms</li>
+      <li>Filter rows by column value</li>
+      <li>Begin, rollback, commit transactions</li>
+      <li>Backup tables and export CSV</li>
+    </ul>
+    <div class="highlight">Tip: Use the filter bar to find specific rows quickly.</div>
+  </div>
+
+<div class="section">
+  <h2>5. REST API Usage</h2>
+  <p>Launch the API with:</p>
+  <pre><code>python maestrodatabase_api.py</code></pre>
+  <p>Use Basic Auth (default username <code>admin</code>, password <code>password123</code>).</p>
+  <div class="highlight">
+    <strong>Security Warning:</strong> <br>
+    <em>You must change the default password before using the API in any real environment!</em> 
+    Hardcoded credentials are only for demo purposes.
+  </div>
+
+  <h3>5.1 API Endpoints</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Endpoint</th>
+        <th>Method</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>/create_table</td><td>POST</td><td>Create a new table</td></tr>
+      <tr><td>/insert/&lt;table_name&gt;</td><td>POST</td><td>Insert a record</td></tr>
+      <tr><td>/select/&lt;table_name&gt;</td><td>GET</td><td>Query records</td></tr>
+      <tr><td>/update/&lt;table_name&gt;</td><td>PUT</td><td>Update records</td></tr>
+      <tr><td>/delete/&lt;table_name&gt;</td><td>DELETE</td><td>Delete records</td></tr>
+      <tr><td>/tables</td><td>GET</td><td>List all tables</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 Example API Usage</h3>
+  <pre><code>curl -u admin:password123 -X POST http://127.0.0.1:5000/insert/users \
+-H "Content-Type: application/json" \
+-d '{"id":3,"name":"Charlie","email":"charlie@example.com"}'
+
+curl -u admin:password123 http://127.0.0.1:5000/select/users?name=Charlie</code></pre>
+</div>
+
+  <div class="section">
+    <h2>6. Schema & Validation</h2>
+    <p>MDB supports optional schema for each table:</p>
+    <ul>
+            <li>Change the default API password immediately. Hardcoded credentials are only for demonstration.</li>
+    <li>Keep the <code>data/</code> folder safe — all tables are stored as JSON.</li>
+    <li>Use transactions when performing multiple inserts/updates to prevent mistakes.</li>
+    <li>Back up tables regularly.</li>
+    <li>Filter in GUI uses exact matches — plan your schema and queries accordingly.</li>
+      <li>Defines column names and types</li>
+      <li>Prevents insertion of invalid data</li>
+      <li>Columns without types are treated as "any"</li>
+    </ul>
+    <pre><code>schema = {"id": int, "name": str, "score": float}
+db.create_table("students", schema=schema)</code></pre>
+    <div class="highlight">Tip: Always define schemas for tables that need strict type validation.</div>
+  </div>
+
+  <div class="section">
+    <h2>7. Best Practices & Tips</h2>
+    <ul>
+      <li>Keep the <code>data/</code> folder safe — all tables are stored as JSON.</li>
+      <li>Use transactions when performing multiple inserts/updates to prevent accidental mistakes.</li>
+      <li>Back up tables regularly.</li>
+      <li>Filter in GUI uses exact matches — plan your schema and queries accordingly.</li>
+      <li>The API is demo-only: replace hardcoded credentials for production use.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>8. Cheat Sheet Summary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>CLI / Python</th>
+          <th>GUI</th>
+          <th>API</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Create table</td>
+          <td><code>db.create_table("name", schema={...})</code></td>
+          <td>Create table button → enter name & schema</td>
+          <td>POST /create_table</td>
+        </tr>
+        <tr>
+          <td>Insert row</td>
+          <td><code>db.insert("table", {...})</code></td>
+          <td>Insert row button → fill form</td>
+          <td>POST /insert/&lt;table&gt;</td>
+        </tr>
+        <tr>
+          <td>Select rows</td>
+          <td><code>db.select("table", ...)</code></td>
+          <td>Filter bar / view table</td>
+          <td>GET /select/&lt;table&gt;</td>
+        </tr>
+        <tr>
+          <td>Update row</td>
+          <td><code>db.update("table", conditions, updates)</code></td>
+          <td>Edit row → save</td>
+          <td>PUT /update/&lt;table&gt;</td>
+        </tr>
+        <tr>
+          <td>Delete row</td>
+          <td><code>db.delete("table", ...)</code></td>
+          <td>Select row → delete</td>
+          <td>DELETE /delete/&lt;table&gt;</td>
+        </tr>
+        <tr>
+          <td>Transaction</td>
+          <td><code>db.begin_transaction / db.rollback / db.commit</code></td>
+          <td>Begin, rollback, commit buttons</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td>Backup / Export CSV</td>
+          <td><code>db.backup_table / db.export_csv</code></td>
+          <td>Backup / Export buttons</td>
+          <td>N/A</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</body>
+</html>
